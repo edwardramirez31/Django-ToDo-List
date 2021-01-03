@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+from django.urls import reverse
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -123,3 +124,11 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+# redirigir login cuando no existe el next
+LOGIN_REDIRECT_URL = '/tasks/list'
+# redirigir el logout cuando no hay next
+LOGOUT_REDIRECT_URL = '/logout'
+
+# este se para el login required mixin
+# LOGIN_URL = 'login'
