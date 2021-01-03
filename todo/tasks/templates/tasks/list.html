@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% load crispy_forms_tags %}
 <!-- -->
 {% block content %}
 <div class="column-center">
@@ -13,9 +13,6 @@
   {% endfor %} {% else %}
   <p>There are no tasks in the database.</p>
   {% endif %}
-  <div>
-    <a href="{% url 'logout' %}">Logout</a>
-  </div>
 </div>
 
 <!-- -->
