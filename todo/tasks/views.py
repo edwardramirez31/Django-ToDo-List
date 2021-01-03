@@ -2,10 +2,12 @@ from django.shortcuts import render
 from django.views import View
 from .forms import TaskForm
 from .models import Task
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 # Create your views here.
 
 
-class TasksListView(View):
+class TasksListView(LoginRequiredMixin, View):
     template_name = 'tasks/list.html'
 
     def get(self, request):

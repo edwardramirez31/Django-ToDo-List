@@ -13,6 +13,9 @@
   {% endfor %} {% else %}
   <p>There are no tasks in the database.</p>
   {% endif %}
+  <div>
+    <a href="{% url 'logout' %}?next={% url 'users:register' %}">Logout</a>
+  </div>
 </div>
 
 <!-- -->

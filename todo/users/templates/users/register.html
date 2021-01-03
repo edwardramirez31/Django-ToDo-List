@@ -10,9 +10,12 @@
       <button class="btn btn-outline-info" type="submit">Sign Up</button>
     </div>
   </form>
-  <div class="border-top pt-3">
+  <div class="border-top mt-3">
     <small class="text-muted">
-      Already Have an Account? <a href="#" class="ml-2">Log in</a>
+      Already Have an Account?
+      <a href="{% url 'login' %}?next={% url 'tasks:all' %}" class="ml-2"
+        >Log in</a
+      >
     </small>
   </div>
 </div>
