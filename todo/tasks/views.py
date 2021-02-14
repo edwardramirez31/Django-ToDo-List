@@ -1,11 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
+from django.views.generic.edit import CreateView
 from .forms import TaskForm, TagForm
-from .models import Task
+from .models import Task, Tag
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from django.http import HttpResponse
+from django.urls import reverse_lazy
 # Create your views here.
 
 
@@ -15,24 +17,17 @@ class TasksListView(LoginRequiredMixin, View):
     def get(self, request):
         tasks = Task.objects.filter(user=request.user)
         task_form = TaskForm(user=request.user)
-        tag_form = TagForm()
-        context = {"tag_form": tag_form, "tasks": tasks, "task_form": task_form}
+        tags = request.user.all_tags.all()
+
+        context = {"tasks": tasks, "task_form": task_form, "tags": tags}
         return render(request, self.template_name, context)
 
     def post(self, request):
         task_form = TaskForm(request.POST, user=request.user)
-        tag_form = TagForm(request.POST)
         tasks = Task.objects.filter(user=request.user)
-        # ! Get the user tags 
-        user_tags = request.user.all_tags.all().values('tag_name')
-        tag = tag_form.save(commit=False)
-        user_tag_names = [tag['tag_name'] for tag in user_tags]
-        # <QuerySet [{'tag_name': 'khe study'}, {'tag_name': 'khe study'}]>
-        if tag.tag_name in user_tag_names:
-            tag_form.add_error("tag_name", "This tag already exists")
 
-        if not task_form.is_valid() or not tag_form.is_valid():
-            context = {"task_form": task_form, "tasks": tasks, "tag_form": tag_form}
+        if not task_form.is_valid():
+            context = {"task_form": task_form, "tasks": tasks}
             return render(request, self.template_name, context)
 
         # Adding the task owner
