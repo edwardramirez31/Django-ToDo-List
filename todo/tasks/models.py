@@ -24,9 +24,16 @@ class Tag(models.Model):
     tag_name = models.CharField(max_length=20)
     author = models.ForeignKey(settings.AUTH_USER_MODEL,
                                on_delete=models.CASCADE, related_name='all_tags')
+    color = models.ForeignKey('TagColor', on_delete=models.SET_DEFAULT, default=1, related_name='color_tags')
 
     def __str__(self):
-        return f'{self.tag_name} Tag by {self.author.username}'
+        return self.tag_name
+    
+class TagColor(models.Model):
+    color_class = models.CharField(max_length=100)
+    color_name = models.CharField(max_length=100, null=True)
+    def __str__(self):
+        return self.color_name
 
 # class TasksToTask(models.Model):
 #     tag = models.ForeignKey(Tag, related_name='all_tasks')

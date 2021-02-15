@@ -30,7 +30,7 @@
             <label class="form-check-label" for="Check-{{ task.id }}" {% if task.completed %} style="text-decoration: line-through;"{% endif %}>
               {{ task.title }}</label><br>
           {% for tag in task.tag.all %}
-          <span class="badge rounded-pill bg-primary">{{ tag }}</span>
+          <span class="badge rounded-pill bg-{{ tag.color.color_class }}">{{ tag }}</span>
           {% endfor %}
           </div>
           
