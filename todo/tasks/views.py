@@ -9,7 +9,7 @@ from django.utils.decorators import method_decorator
 from django.http import HttpResponse, JsonResponse
 from django.urls import reverse_lazy, reverse
 import random
-
+import json
 
 class TasksListView(LoginRequiredMixin, View):
     template_name = 'tasks/list.html'
@@ -107,4 +107,11 @@ def EditColorView(request, tag_pk, color_pk):
     color = get_object_or_404(TagColor, pk=color_pk)
     tag.color = color
     tag.save()
+    return HttpResponse("Successfully updated")
+
+def TaskUpdateView(request, pk):
+    task = get_object_or_404(Task, pk=pk)
+    task.title = json.load(request)['new_title']
+    # task.title = request.body.decode("utf-8")[1:-1]
+    task.save()
     return HttpResponse("Successfully updated")

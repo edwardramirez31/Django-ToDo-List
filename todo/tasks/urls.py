@@ -10,4 +10,5 @@ urlpatterns = [
     path('create/tag', TagCreateView.as_view(), name='tag_create'),
     path('list/tag/<int:pk>', TagListView.as_view(), name='tag_list'),
     path('<int:tag_pk>/editColor/<int:color_pk>', EditColorView, name='edit_color'),
+    path('<int:pk>/updateTask', TaskUpdateView, name='update_task'),
 ]
