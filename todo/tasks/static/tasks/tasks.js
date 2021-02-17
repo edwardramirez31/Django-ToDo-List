@@ -32,17 +32,22 @@ modal_btn.addEventListener('click', async (e) => {
   let modalLabel = document.querySelector("#update-label");
   var text = modalLabel.value;
   var label = document.querySelector(`#task-${labelID}`);
-  label.innerHTML = text;
-  modalLabel.value = '';
-  $('#taskModal').modal('hide');
-  var response = await fetch(postURL, {
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json',
-      "X-CSRFToken": getCookie('csrftoken')
-    },
-    body: JSON.stringify({"new_title": text})
-  });
-  var data = await response.text();
-  console.log(data);
+  if (text === '') {
+    $('#taskModal').modal('hide');
+  } else {
+    label.innerHTML = text;
+    modalLabel.value = '';
+    $('#taskModal').modal('hide');
+    var response = await fetch(postURL, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        "X-CSRFToken": getCookie('csrftoken')
+      },
+      body: JSON.stringify({"new_title": text})
+    });
+    var data = await response.text();
+    console.log(data);
+  }
+  
 });

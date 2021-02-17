@@ -76,7 +76,8 @@ class TagListView(LoginRequiredMixin, View):
         tag = get_object_or_404(Tag, pk=pk)
         tags = request.user.all_tags.all()
         colors = TagColor.objects.all()
-        context = {"tags": tags, "tag": tag, "colors": colors}
+        tasks = tag.all_tasks.all()
+        context = {"tags": tags, "tag": tag, "colors": colors, "tasks": tasks}
         return render(request, "tasks/tag_list.html", context)
 
 @method_decorator(csrf_exempt, name='dispatch')
