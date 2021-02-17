@@ -6,10 +6,9 @@ from .models import Task, Tag, TagColor
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.urls import reverse_lazy, reverse
 import random
-# Create your views here.
 
 
 class TasksListView(LoginRequiredMixin, View):
@@ -52,8 +51,6 @@ class TagCreateView(LoginRequiredMixin, View):
         return render(request, self.template_name, context)
 
     def post(self, request):
-        # self.object = None
-        # return super().post(request, *args, **kwargs)
         form = TagForm(request.POST, user=request.user)
         if form.is_valid():
             form.instance.author = self.request.user
@@ -77,8 +74,6 @@ class TagCreateView(LoginRequiredMixin, View):
 class TagListView(LoginRequiredMixin, View):
     def get(self, request, pk):
         tag = get_object_or_404(Tag, pk=pk)
-        # se pueden pasar las tareas de esa etiqueta
-        # tasks = Task.objects.filter(tag=tag)
         tags = request.user.all_tags.all()
         colors = TagColor.objects.all()
         context = {"tags": tags, "tag": tag, "colors": colors}
@@ -112,4 +107,4 @@ def EditColorView(request, tag_pk, color_pk):
     color = get_object_or_404(TagColor, pk=color_pk)
     tag.color = color
     tag.save()
-    return redirect(reverse('tasks:tag_list', args=[tag.id]))
+    return HttpResponse("Successfully updated")

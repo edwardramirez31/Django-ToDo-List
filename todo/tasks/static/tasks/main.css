@@ -1,0 +1,31 @@
+body {
+    background-color: #f3f3f3;
+    margin-top: 30px;
+    padding: 0;
+}
+
+.content-section {
+    /* border: 1px solid black; */
+    background: #fff;
+    border-radius: 3px;
+    margin-bottom: 20px;
+    padding: 20px 20px;
+
+}
+
+.bg-light{
+    color: #000;
+}
+
+.text-light {
+    /* background-color: #dedede; */
+    color: lightgray !important;
+}
+
+.btn-light {
+    color: black !important;
+}
+.rounded-circle {
+    width: 20px;
+    height: 20px;
+}
