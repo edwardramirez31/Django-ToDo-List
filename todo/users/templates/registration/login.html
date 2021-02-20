@@ -1,21 +1,27 @@
-{% extends 'base.html'%} {% load crispy_forms_tags %} {% block content%}
-<div class="content-section">
-  <form action="{% url 'login' %}" method="post">
-    {% csrf_token %}
-    <fieldset class="form-group">
-      <legend class="border-bottom mb-4">Log in</legend>
-      {{ form|crispy }}
-    </fieldset>
-    <div class="form-group mt-2">
-      <button class="btn btn-outline-info px-4" type="submit">Login</button>
-      <input  type="hidden" name="next" value="{{ next }}" />
+{% extends 'base.html'%} {% load crispy_forms_tags %} {% block page%}
+<div class="row" style="margin-top: 8rem;">
+  <div class="col-md-4 mx-auto">
+    <div class="content-section font-monospace">
+        <form action="{% url 'login' %}" method="post">
+          {% csrf_token %}
+          <fieldset class="form-group">
+            <legend class="border-bottom mb-4 fw-bold-title text-center">WELCOME BACK!</legend>
+            {{ form|crispy }}
+          </fieldset>
+          <div class="form-group mt-2">
+            <div class="d-grid gap-2">
+              <button class="btn btn-primary px-4 fw-bold" type="submit">LOGIN</button>
+            </div>
+            <input  type="hidden" name="next" value="{{ next }}" />
+          </div>
+        </form>
+        <div class="border-top mt-3">
+          <small class="text-muted">
+            Need an account?
+            <a href="{% url 'users:register' %}">Sign Up Now</a>
+          </small>
+        </div>
     </div>
-  </form>
-  <div class="border-top mt-3">
-    <small class="text-muted">
-      Need an account?
-      <a href="{% url 'users:register' %}">Sign Up Now</a>
-    </small>
   </div>
 </div>
 {% endblock %}

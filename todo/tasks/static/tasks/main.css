@@ -29,3 +29,8 @@ body {
     width: 20px;
     height: 20px;
 }
+
+.fw-bold-title {
+    color: #444;
+    font-weight: bold;
+}

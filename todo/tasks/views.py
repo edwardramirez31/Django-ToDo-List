@@ -76,9 +76,42 @@ class TagListView(LoginRequiredMixin, View):
         tag = get_object_or_404(Tag, pk=pk)
         tags = request.user.all_tags.all()
         colors = TagColor.objects.all()
-        tasks = tag.all_tasks.all()
-        context = {"tags": tags, "tag": tag, "colors": colors, "tasks": tasks}
+        # tasks = tag.all_tasks.all()
+        context = {"tags": tags, "tag": tag, "colors": colors}
         return render(request, "tasks/tag_list.html", context)
+
+class TagUpdateView(LoginRequiredMixin, View):
+    def get(self, request, pk):
+        form = TagForm()
+        tags = request.user.all_tags.all()
+        title = "Edit the Tag"
+        context = {"tags": tags, "form": form, "title": title}
+        return render(request, "tasks/tag_form.html", context)
+
+    def post(self, request, pk):
+        tag = get_object_or_404(Tag, pk=pk)
+        form = TagForm(request.POST, instance=tag)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse("tasks:tag_list", args=[pk]))
+
+        tags = request.user.all_tags.all()
+        title = "Edit the Tag"
+        context = {"tags": tags, "form": form, "title": title}
+        return render(request, "tasks/tag_form.html", context)
+
+class TagDeleteView(LoginRequiredMixin, View):
+    def get(self, request, pk):
+        tag = get_object_or_404(Tag, pk=pk)
+        tags = request.user.all_tags.all()
+        context = {'tag': tag, "tags": tags}
+        return render(request, "tasks/tag_delete.html", context)
+
+    def post(self, request, pk):
+        tag = get_object_or_404(Tag, pk=pk)
+        tag.delete()
+        return redirect("tasks:all")
+
 
 @method_decorator(csrf_exempt, name='dispatch')
 class MarkHandleView(LoginRequiredMixin, View):

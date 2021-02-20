@@ -1,0 +1,12 @@
+{% extends 'base_tasks.html' %}
+{% block content %}
+<div class="content-section">
+  <h2>Delete a tag</h2>
+  <p class="lead">Are you sure you want to delete: <strong>{{ tag }}</strong>?</p>
+  <form action="" method="post">
+  {% csrf_token %}
+  <a class="btn btn-dark" href="{% url 'tasks:all' %}">Cancel</a>
+  <button type="submit" class="btn btn-danger">Delete</button>
+  </form>
+</div>
+{% endblock %}

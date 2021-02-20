@@ -1,3 +1,4 @@
+{% if tasks %}
 <ul class="mt-3 list-group">
       {% for task in tasks %}
       <li class="list-group-item">
@@ -15,7 +16,7 @@
             <label class="form-check-label" for="Check-{{ task.id }}" {% if task.completed %} style="text-decoration: line-through;"{% endif %} id="task-{{task.id}}">
               {{ task.title }}</label><br>
           {% for tag in task.tag.all %}
-          <span class="badge rounded-pill bg-{{ tag.color.color_class }}">{{ tag }}</span>
+          <span class="bg-{{ tag.color.color_class }} badge rounded-pill  {{ tag.id }}">{{ tag }}</span>
           {% endfor %}
           </div>
           
@@ -54,4 +55,6 @@
         </div>
       </div>
     </div>
-  
+{% else %}
+<p>There are no tasks in the database.</p>
+{% endif %}
